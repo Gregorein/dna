@@ -1,13 +1,30 @@
 import { useMemo, useState } from "react";
 import { navigate, setUser, useStoreDispatch } from "../store";
-import { Error, Screen } from "../components";
+import { Screen } from "../components";
 import { login } from "../api";
+
+import {
+	TextField,
+	InputAdornment,
+	IconButton,
+	FormControl,
+	InputLabel,
+	OutlinedInput,
+	FormHelperText ,
+} from "@mui/material"
+import {
+	Eye,
+	EyeOff
+} from 'lucide-react';
 
 export const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string>();
   const dispatch = useStoreDispatch();
+
+	const [showPassword, togglePassword] = useState(false)
+	const toggleShowPassword = ():void => togglePassword(!showPassword)
 
   const actions = useMemo(
     () => [
@@ -23,6 +40,10 @@ export const LoginPage = () => {
           }
         },
       },
+			{
+				label: "back",
+				callback: () => dispatch(navigate("/")),
+			},
     ],
     [email, password],
   );
@@ -33,22 +54,44 @@ export const LoginPage = () => {
       content={
         <>
           <form className="form">
-            <label htmlFor="email">Email: </label>
-            <input
-              name="email"
-              type="email"
+						<TextField
+							label="Email:"
+							name="email"
+							type="email"
               autoFocus
               onChange={(e) => setEmail(e.target.value)}
-            />
-            <label htmlFor="password">Password: </label>
-            <input
-              name="password"
-              type="password"
+					/>
+
+					<FormControl variant="outlined">
+						<InputLabel>
+							Password:
+						</InputLabel>
+						<OutlinedInput
+							type={showPassword ? 'text' : 'password'}
+							name="password"
+							error={!!error}
+							endAdornment={
+								<InputAdornment position="end">
+									<IconButton
+										aria-label="toggle password visibility"
+										onClick={toggleShowPassword}
+										edge="end"
+									>
+										{showPassword ? <EyeOff /> : <Eye />}
+									</IconButton>
+								</InputAdornment>
+							}
+							label="Password:"
               onChange={(e) => setPassword(e.target.value)}
-            />
-          </form>
-          <Error message={error} />
-        </>
+						/>
+							{error && (
+								<FormHelperText sx={{color: "red"}}>
+									{error}
+								</FormHelperText>
+							)}
+						</FormControl>
+					</form>
+				</>
       }
       actions={actions}
     />

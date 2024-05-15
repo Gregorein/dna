@@ -1,6 +1,8 @@
 import { navigate, useStoreDispatch } from "../store";
 import { Screen } from "../components";
 
+import {Theater} from "lucide-react"
+
 export const LandingPage = () => {
   const dispatch = useStoreDispatch();
 
@@ -15,8 +17,9 @@ export const LandingPage = () => {
   return (
     <Screen
       title="Fantastic Festivals Web App!"
-      content={<h2>Welcome!</h2>}
       actions={actions}
-    />
+			>
+			<Theater size={256} />
+		</Screen>
   );
 };

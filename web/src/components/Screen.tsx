@@ -1,5 +1,11 @@
 import { ReactNode } from "react";
-import "./Screen.css";
+
+import {
+	Typography,
+	Box,
+	ButtonGroup,
+	Button
+} from "@mui/material"
 
 interface Action {
   label: string;
@@ -8,30 +14,52 @@ interface Action {
 
 interface ScreenProps {
   title: string;
-  content: ReactNode;
+  content?: ReactNode;
+	children?: ReactNode
   actions: Array<Action>;
 }
 
 export const Screen = (props: ScreenProps) => {
   return (
-    <div className="container">
-      <div>
-        <h1>{props.title}</h1>
-        {props.content}
-      </div>
-      <div className="actions">
-        {props.actions.map((action) => {
+    <Box sx={{
+			display: "flex",
+			flexDirection: "column",
+			justifyContent: "space-between",
+			height: "100%"
+		}}>
+			<Typography
+				component="h1"
+				variant="h2"
+				textAlign="center"
+			>
+				{props.title}
+				</Typography>
+      <Box sx={{
+				display: "flex",
+				flexDirection: "column",
+				justifyContent: "center",
+				alignItems: "center",
+				flex: 1,
+				padding: 3
+			}}>
+        {props.content || props.children}
+      </Box>
+      <ButtonGroup
+				orientation="vertical"
+				size="large"
+			>
+        {props.actions.map((action, i) => {
           return (
-            <button
+            <Button
               key={action.label}
               onClick={action.callback}
-              className="action"
+							variant={i === 0 ? "contained" : "outlined"}
             >
               {action.label.toUpperCase()}
-            </button>
+            </Button>
           );
         })}
-      </div>
-    </div>
+      </ButtonGroup>
+    </Box>
   );
 };

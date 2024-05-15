@@ -1,8 +1,26 @@
 # Task project
 
+## Todo
+### MVP implementing (part of) the:
+* user onboarding  
+* skippable user guide  
+* main screen for festivals grouped by organiser + wallet info  
+* festival page + wallet actions  
+* QR code page + wallet actions  
+* (redux)  
+
+### What could be implemented/changed further:
+* everything - use Next.js to rewrite app with SSR + api middleman
+* implement proper routing (without redux) and use a auth middleware to lock access, short token lifespan + reauth (bc money)  
+* rewrite `<Screen/>` to remove forced actions from views
+* add normalize.css and parts of reset.css
+* minimized bundle size by modyfying imports
+
+
 ## Prerequisites
 
 - [Node.js](https://nodejs.org/en) v20
+- [React.js](https://react.dev/0) v18+
 
 ## Project structure
 

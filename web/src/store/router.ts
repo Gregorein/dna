@@ -62,7 +62,7 @@ export const routerSlice = createSlice({
 				window.history.pushState(undefined, route);		
 				state.page = ROUTING[(route as Route)];
 
-				if(route === ROUTING["/festival"]) {
+				if(route === "/festival") {
 					state.activeFestival = args[0]
 				}
 			},

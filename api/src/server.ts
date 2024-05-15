@@ -56,10 +56,9 @@ async function requestListener(
     } else if (url.pathname === "/festivals/list" && method === "POST") {
       const body = await getBody(req);
       result = festivalsList(body);		
-      result = userAccountTopUp(body);
     } else if (url.pathname === "/festivals/info" && method === "POST") {
       const body = await getBody(req);
-      result = festivalInfo(body);		
+      result = festivalsInfo(body);		
     } else {
       result = { status: 404, headers: {}, body: {} };
     }

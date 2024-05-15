@@ -1,7 +1,5 @@
 import {useEffect, useState} from "react"
 
-import { useStoreSelector } from "../store";
-
 import { navigate, useStoreDispatch } from "../store";
 import { Screen } from "../components";
 import { useIsUserLoggedIn } from "../hooks";
@@ -21,8 +19,6 @@ import {festivalsList, Festival} from "../api/festivalsList"
 export const HomePage = () => {
   const user = useIsUserLoggedIn();
   const dispatch = useStoreDispatch();
-
-	const activeFestival = useStoreSelector((store) => store.router.activeFestival);
 
 	const [list, setList] = useState<Festival[]>([])
 	useEffect(() => {

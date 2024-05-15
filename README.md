@@ -2,21 +2,22 @@
 
 ## Todo
 ### MVP implementing (part of) the:
-* user onboarding  
-* skippable user guide  
-* main screen for festivals grouped by organiser + wallet info  
-* festival page + wallet actions  
+* main screen for festivals grouped by organiser
+* festival page
 * QR code page + wallet actions  
 * (redux)  
 
 ### What could be implemented/changed further:
 * refactor and implement proper routing (without redux) and use a auth middleware to lock access, short token lifespan + reauth (bc money), and also because tokens in URLS can't be added rn. Stop inventing wheels :D
+* finishing festival page with a separate reducer
 
 * everything - use Next.js to rewrite app with SSR + api middleman
+  
 * rewrite `<Screen/>` to remove forced actions from views
 * add normalize.css and parts of reset.css
 * minimized bundle size by modyfying imports
-* refactor server, split endpoints, interfaces, logic etc.
+* refactor server, split endpoints, interfaces, logic
+* etc.
 
 ## Prerequisites
 

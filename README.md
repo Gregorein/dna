@@ -10,12 +10,13 @@
 * (redux)  
 
 ### What could be implemented/changed further:
+* refactor and implement proper routing (without redux) and use a auth middleware to lock access, short token lifespan + reauth (bc money), and also because tokens in URLS can't be added rn. Stop inventing wheels :D
+
 * everything - use Next.js to rewrite app with SSR + api middleman
-* implement proper routing (without redux) and use a auth middleware to lock access, short token lifespan + reauth (bc money)  
 * rewrite `<Screen/>` to remove forced actions from views
 * add normalize.css and parts of reset.css
 * minimized bundle size by modyfying imports
-
+* refactor server, split endpoints, interfaces, logic etc.
 
 ## Prerequisites
 

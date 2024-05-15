@@ -1,18 +1,17 @@
-import { Screen } from "../components";
-import { Cog } from 'lucide-react'
+import { QRPopup, Screen } from "../components";
 import { navigate, useStoreDispatch } from "../store";
 
-export const SettingsPage = () => {
+export const FestivalPage = () => {
   const dispatch = useStoreDispatch();
 
 	return (
 		<Screen
-			title="settings"
+			title="Festival"
 			actions={[
 				{ label: "festivals", callback: () => dispatch(navigate("/home")) },
 			]}
 		>
-			<Cog />
+			<QRPopup />
 		</Screen>
 	)
 }

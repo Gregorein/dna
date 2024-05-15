@@ -7,6 +7,8 @@ export const PAGES = {
   HOME: "home",
   TOP_UP: "top-up",
   ERROR: "error",
+	SETTINGS: "settings",
+	FESTIVAL: "festival"
 } as const;
 
 export type Page = (typeof PAGES)[keyof typeof PAGES];
@@ -20,6 +22,8 @@ const ROUTING = {
   "/sign-in": PAGES.LOGIN,
   "/home": PAGES.HOME,
   "/top-up": PAGES.TOP_UP,
+	"/settings": PAGES.SETTINGS,
+	"/festival": PAGES.FESTIVAL
 } satisfies Record<string, Page>;
 
 export type Route = keyof typeof ROUTING;
@@ -30,7 +34,6 @@ const isRoute = (arg: string): arg is Route => {
 
 export const getPageFromUrl = (): Page => {
   const url = window.location.pathname;
-
   if (isRoute(url)) {
     return ROUTING[url];
   }
@@ -40,21 +43,35 @@ export const getPageFromUrl = (): Page => {
 
 export interface RouterState {
   page: Page;
+	activeFestival?: string
 }
 
 const initialState: RouterState = {
   page: getPageFromUrl(),
+	activeFestival: undefined
 };
 
 export const routerSlice = createSlice({
   name: "router",
   initialState,
   reducers: {
-    navigate: (state, action: PayloadAction<Route>) => {
-      const route = action.payload;
-      window.history.pushState(undefined, "Festivals", route);
-      state.page = ROUTING[route];
-    },
+    navigate: {
+			reducer: (state, action: PayloadAction<(Route | string)[]>) => {
+				const [route, ...args] = action.payload;
+
+				window.history.pushState(undefined, route);		
+				state.page = ROUTING[(route as Route)];
+
+				if(route === ROUTING["/festival"]) {
+					state.activeFestival = args[0]
+				}
+			},
+			prepare: (...args:any) => {
+				return {
+					payload: args
+				}
+			},
+		},
     onBrowserEvent: (state) => {
       state.page = getPageFromUrl();
     },

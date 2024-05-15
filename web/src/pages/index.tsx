@@ -6,6 +6,8 @@ import { LoginPage } from "./LoginPage";
 import { HomePage } from "./HomePage";
 import { TopUpPage } from "./TopUpPage";
 import { ErrorPage } from "./ErrorPage";
+import { SettingsPage} from "./SettingsPage";
+import { FestivalPage} from "./FestivalPage";
 
 const PAGE_COMPONENT: Record<PageType, ComponentType> = {
   [PAGES.LANDING]: LandingPage,
@@ -14,6 +16,8 @@ const PAGE_COMPONENT: Record<PageType, ComponentType> = {
   [PAGES.REGISTER]: RegistrationPage,
   [PAGES.TOP_UP]: TopUpPage,
   [PAGES.ERROR]: ErrorPage,
+	[PAGES.SETTINGS]: SettingsPage,
+	[PAGES.FESTIVAL]: FestivalPage
 };
 
 export const Page = () => {

@@ -1,6 +1,7 @@
 import { createServer, IncomingMessage, ServerResponse } from "node:http";
 import { randomBytes } from "node:crypto";
 import { User } from "#contract/user";
+import { Festival} from "#contract/festival";
 
 const PORT = 8000;
 
@@ -17,6 +18,15 @@ interface Result {
 }
 
 const USERS: UserData[] = [];
+
+const FESTIVALS: Festival[] = [
+	{
+		id: "bG9yZW1JcHN1bUZlc3RpdmFs",
+		name: "Lorem Ipsum Festival",
+		description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ultrices efficitur massa, sed sagittis nisi scelerisque vitae. Aliquam pretium ante eu ligula aliquet tempus. Sed suscipit orci quis lectus tempor, sit amet commodo quam lobortis. Vestibulum aliquet risus quam, eget mollis urna porttitor eu. Phasellus in magna justo. Integer hendrerit facilisis porta. Nunc sed ipsum volutpat, ullamcorper libero ac, tempus diam. Nam scelerisque felis nec arcu suscipit feugiat. Pellentesque feugiat massa sit amet metus ornare mollis. Nunc ac justo congue, cursus ipsum nec, pellentesque turpis. Aenean auctor aliquet efficitur. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent luctus eros ac nibh auctor, faucibus blandit nisi finibus."
+	}
+]
+
 
 const server = createServer(requestListener);
 
@@ -43,6 +53,13 @@ async function requestListener(
     } else if (url.pathname === "/users/account/top-up" && method === "POST") {
       const body = await getBody(req);
       result = userAccountTopUp(body);
+    } else if (url.pathname === "/festivals/list" && method === "POST") {
+      const body = await getBody(req);
+      result = festivalsList(body);		
+      result = userAccountTopUp(body);
+    } else if (url.pathname === "/festivals/info" && method === "POST") {
+      const body = await getBody(req);
+      result = festivalInfo(body);		
     } else {
       result = { status: 404, headers: {}, body: {} };
     }
@@ -170,4 +187,66 @@ function userAccountTopUp(data: Data): Result {
   user.balance += data.amount;
 
   return { status: 200, body: { newBalance: user.balance }, headers: {} };
+}
+
+function festivalsList(data: Data): Result {
+	if (
+    !data.userId ||
+    typeof data.userId !== "string"
+  ) {
+    return {
+      status: 400,
+      body: { error: "Invalid request" },
+      headers: {},
+    };
+  }
+
+  const user = USERS.find((it) => it.id === data.userId);
+
+	if (!user) {
+    return {
+      status: 401,
+      body: { error: "Please login to access information" },
+      headers: {},
+    };
+  }
+
+  return { status: 200, body: { festivals: FESTIVALS }, headers: {} };
+}
+
+function festivalsInfo(data: Data): Result {
+	if (
+    !data.userId ||
+    typeof data.userId !== "string" ||
+    !data.festivalId ||
+    typeof data.festivalId !== "string"		
+  ) {
+    return {
+      status: 400,
+      body: { error: "Invalid request" },
+      headers: {},
+    };
+  }
+
+  const user = USERS.find((it) => it.id === data.userId);
+
+	if (!user) {
+    return {
+      status: 401,
+      body: { error: "Please login to access information" },
+      headers: {},
+    };
+  }
+
+  const festival = FESTIVALS.find((it) => it.id === data.festivalId);
+
+	if (!festival) {
+    return {
+      status: 404,
+      body: { error: "Festival not found" },
+      headers: {},
+    };
+  }
+
+  return { status: 200, body: { festival }, headers: {} };
 }

@@ -19,7 +19,7 @@ type QRPopupProps = {
 
 }
 
-const QRPopup = ({
+export const QRPopup = ({
 
 }: QRPopupProps) => {
   const user = useIsUserLoggedIn();
@@ -96,5 +96,3 @@ const QRPopup = ({
 		</>
 	)
 }
-
-export default QRPopup

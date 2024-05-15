@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { navigate, setUser, useStoreDispatch } from "../store";
-import { Error, Screen } from "../components";
+import { Screen } from "../components";
 import { register } from "../api";
 
 import {
